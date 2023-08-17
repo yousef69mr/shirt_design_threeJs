@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, Center } from "@react-three/drei";
 import Shirt from "./Shirt";
 import CameraRig from "./CameraRig";
+import CanvasLoader from "../components/Loader";
 import Backdrop from "./Backdrop";
 
 import { ErrorBoundary } from "react-error-boundary";
@@ -29,12 +30,14 @@ const CanvasModel = () => {
       >
         <ambientLight intensity={0.5} />
         <Environment preset="city" />
-        <CameraRig>
-          <Backdrop />
-          <Center>
-            <Shirt />
-          </Center>
-        </CameraRig>
+        <Suspense fallback={<CanvasLoader/>}>
+          <CameraRig>
+            <Backdrop />
+            <Center>
+              <Shirt />
+            </Center>
+          </CameraRig>
+        </Suspense>
       </Canvas>
     </ErrorBoundary>
   );
